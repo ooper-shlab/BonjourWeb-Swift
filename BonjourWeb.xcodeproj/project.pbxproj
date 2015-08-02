@@ -1,0 +1,348 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D4F2F9A0D10AC310045FB13 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D4F2F990D10AC310045FB13 /* Default.png */; };
+		2883CB400DE2CC1800AFA03B /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2883CB3F0DE2CC1800AFA03B /* Icon.png */; };
+		2B449E2911C8326F00B24959 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B449E2811C8326F00B24959 /* CoreGraphics.framework */; };
+		2B449E2B11C8327500B24959 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B449E2A11C8327500B24959 /* Foundation.framework */; };
+		2B449E2D11C8327B00B24959 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B449E2C11C8327B00B24959 /* UIKit.framework */; };
+		533541920F94E6F300F4AF08 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5335418E0F94E6F300F4AF08 /* Localizable.strings */; };
+		533541930F94E6F300F4AF08 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 533541900F94E6F300F4AF08 /* MainWindow.xib */; };
+		D71850571B6556D9006A2F8F /* BonjourBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71850531B6556D9006A2F8F /* BonjourBrowser.swift */; };
+		D71850581B6556D9006A2F8F /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71850541B6556D9006A2F8F /* BrowserViewController.swift */; };
+		D71850591B6556D9006A2F8F /* DomainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71850551B6556D9006A2F8F /* DomainViewController.swift */; };
+		D718505A1B6556D9006A2F8F /* SimpleEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71850561B6556D9006A2F8F /* SimpleEditViewController.swift */; };
+		D718505D1B6556F7006A2F8F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D718505B1B6556F7006A2F8F /* LaunchScreen.storyboard */; };
+		D75159121B6CBD0F009DEDCB /* BonjourServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75159111B6CBD0F009DEDCB /* BonjourServer.swift */; };
+		D75159141B6CBDA9009DEDCB /* BonjourServerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75159131B6CBDA9009DEDCB /* BonjourServerRequest.swift */; };
+		D76524811B65287500A1E5DA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D76524801B65287500A1E5DA /* Images.xcassets */; };
+		D7F3A5111B6E05280059B804 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = D7F3A5101B6E05280059B804 /* README.md */; };
+		D7FCEB721AF76EEA0011B75D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D7FCEB711AF76EEA0011B75D /* Default-568h@2x.png */; };
+		D7FCEB7F1AF7DE8E0011B75D /* BonjourWebAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FCEB7C1AF7D1FA0011B75D /* BonjourWebAppDelegate.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1D4F2F990D10AC310045FB13 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		1D6058910D05DD3D006BFB54 /* BonjourWeb.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BonjourWeb.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2883CB3F0DE2CC1800AFA03B /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		2B449E2811C8326F00B24959 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2B449E2A11C8327500B24959 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		2B449E2C11C8327B00B24959 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		5335418F0F94E6F300F4AF08 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		533541910F94E6F300F4AF08 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		844867370DB92514009556CD /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; wrapsLines = 1; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D71850531B6556D9006A2F8F /* BonjourBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BonjourBrowser.swift; path = BonjourSupport/BonjourBrowser.swift; sourceTree = "<group>"; };
+		D71850541B6556D9006A2F8F /* BrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrowserViewController.swift; path = BonjourSupport/BrowserViewController.swift; sourceTree = "<group>"; };
+		D71850551B6556D9006A2F8F /* DomainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DomainViewController.swift; path = BonjourSupport/DomainViewController.swift; sourceTree = "<group>"; };
+		D71850561B6556D9006A2F8F /* SimpleEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimpleEditViewController.swift; path = BonjourSupport/SimpleEditViewController.swift; sourceTree = "<group>"; };
+		D718505C1B6556F7006A2F8F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D75159111B6CBD0F009DEDCB /* BonjourServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BonjourServer.swift; path = BonjourSupport/BonjourServer.swift; sourceTree = "<group>"; };
+		D75159131B6CBDA9009DEDCB /* BonjourServerRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BonjourServerRequest.swift; sourceTree = "<group>"; };
+		D76524801B65287500A1E5DA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = BonjourWeb/Images.xcassets; sourceTree = "<group>"; };
+		D7F3A5101B6E05280059B804 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D7FCEB711AF76EEA0011B75D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		D7FCEB7C1AF7D1FA0011B75D /* BonjourWebAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BonjourWebAppDelegate.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B449E2911C8326F00B24959 /* CoreGraphics.framework in Frameworks */,
+				2B449E2B11C8327500B24959 /* Foundation.framework in Frameworks */,
+				2B449E2D11C8327B00B24959 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				D7FCEB7C1AF7D1FA0011B75D /* BonjourWebAppDelegate.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* BonjourWeb.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				D7F3A5101B6E05280059B804 /* README.md */,
+				844867370DB92514009556CD /* ReadMe.txt */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				4ADC7FA00DDD217500F4B61B /* Support */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D76524801B65287500A1E5DA /* Images.xcassets */,
+				5335418E0F94E6F300F4AF08 /* Localizable.strings */,
+				533541900F94E6F300F4AF08 /* MainWindow.xib */,
+				D718505B1B6556F7006A2F8F /* LaunchScreen.storyboard */,
+				1D4F2F990D10AC310045FB13 /* Default.png */,
+				D7FCEB711AF76EEA0011B75D /* Default-568h@2x.png */,
+				2883CB3F0DE2CC1800AFA03B /* Icon.png */,
+				8D1107310486CEB800E47090 /* Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2B449E2811C8326F00B24959 /* CoreGraphics.framework */,
+				2B449E2A11C8327500B24959 /* Foundation.framework */,
+				2B449E2C11C8327B00B24959 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4ADC7FA00DDD217500F4B61B /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				D71850531B6556D9006A2F8F /* BonjourBrowser.swift */,
+				D71850541B6556D9006A2F8F /* BrowserViewController.swift */,
+				D71850551B6556D9006A2F8F /* DomainViewController.swift */,
+				D71850561B6556D9006A2F8F /* SimpleEditViewController.swift */,
+				D75159111B6CBD0F009DEDCB /* BonjourServer.swift */,
+				D75159131B6CBDA9009DEDCB /* BonjourServerRequest.swift */,
+			);
+			name = Support;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* BonjourWeb */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "BonjourWeb" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BonjourWeb;
+			productName = BonjourWeb;
+			productReference = 1D6058910D05DD3D006BFB54 /* BonjourWeb.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BonjourWeb" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				en,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* BonjourWeb */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D4F2F9A0D10AC310045FB13 /* Default.png in Resources */,
+				D76524811B65287500A1E5DA /* Images.xcassets in Resources */,
+				2883CB400DE2CC1800AFA03B /* Icon.png in Resources */,
+				533541920F94E6F300F4AF08 /* Localizable.strings in Resources */,
+				D718505D1B6556F7006A2F8F /* LaunchScreen.storyboard in Resources */,
+				D7FCEB721AF76EEA0011B75D /* Default-568h@2x.png in Resources */,
+				533541930F94E6F300F4AF08 /* MainWindow.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D75159141B6CBDA9009DEDCB /* BonjourServerRequest.swift in Sources */,
+				D75159121B6CBD0F009DEDCB /* BonjourServer.swift in Sources */,
+				D71850591B6556D9006A2F8F /* DomainViewController.swift in Sources */,
+				D718505A1B6556D9006A2F8F /* SimpleEditViewController.swift in Sources */,
+				D71850571B6556D9006A2F8F /* BonjourBrowser.swift in Sources */,
+				D71850581B6556D9006A2F8F /* BrowserViewController.swift in Sources */,
+				D7F3A5111B6E05280059B804 /* README.md in Sources */,
+				D7FCEB7F1AF7DE8E0011B75D /* BonjourWebAppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		5335418E0F94E6F300F4AF08 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5335418F0F94E6F300F4AF08 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		533541900F94E6F300F4AF08 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				533541910F94E6F300F4AF08 /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		D718505B1B6556F7006A2F8F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D718505C1B6556F7006A2F8F /* en */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BonjourWeb_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:identifier}";
+				PRODUCT_NAME = BonjourWeb;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BonjourWeb_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PREBINDING = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:identifier}";
+				PRODUCT_NAME = BonjourWeb;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PREBINDING = NO;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "BonjourWeb" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BonjourWeb" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
