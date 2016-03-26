@@ -208,7 +208,7 @@ class DomainViewController: UITableViewController,SimpleEditViewControllerDelega
     private func addAddButton(right: Bool) {
 //	// add + button as the nav bar's custom right view
 //	UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addAction:")
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(DomainViewController.addAction(_:)))
 //								  initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addAction:)];
 //	if (right) self.navigationItem.rightBarButtonItem = addButton;
         if right {self.navigationItem.rightBarButtonItem = addButton}
@@ -224,7 +224,7 @@ class DomainViewController: UITableViewController,SimpleEditViewControllerDelega
         if editing {
 //		// Add the "done" button to the navigation bar
 //		UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]
-            let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "doneAction:")
+            let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(DomainViewController.doneAction(_:)))
 //									   initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
 //
 //		self.navigationItem.leftBarButtonItem = doneButton;
@@ -239,7 +239,7 @@ class DomainViewController: UITableViewController,SimpleEditViewControllerDelega
             if !self.customs.isEmpty {
 //			// Add the "edit" button to the navigation bar
 //			UIBarButtonItem *editButton = [[UIBarButtonItem alloc]
-                let editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editAction:")
+                let editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(DomainViewController.editAction(_:)))
 //										   initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editAction:)];
 //
 //			self.navigationItem.leftBarButtonItem = editButton;
@@ -256,7 +256,7 @@ class DomainViewController: UITableViewController,SimpleEditViewControllerDelega
             if self.showCancelButton {
 //			// add Cancel button as the nav bar's custom right view
 //			UIBarButtonItem *addButton = [[UIBarButtonItem alloc]
-                let addButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelAction")
+                let addButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(DomainViewController.cancelAction))
 //										  initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAction)];
 //			self.navigationItem.rightBarButtonItem = addButton;
                 self.navigationItem.rightBarButtonItem = addButton
@@ -407,12 +407,14 @@ class DomainViewController: UITableViewController,SimpleEditViewControllerDelega
 //	while (*cstr) {
             while cstr.memory != 0 {
 //		char c = *cstr++;
-                var c = (cstr++).memory
+                var c = cstr.memory
+                cstr += 1
 //		if (c == '\\')
 //		{
                 if c == UInt8(ascii: "\\") {
 //			c = *cstr++;
-                    c = (cstr++).memory
+                    c = cstr.memory
+                    cstr += 1
 //			if (isdigit(cstr[-1]) && isdigit(cstr[0]) && isdigit(cstr[1]))
 //			{
                     if cstr[-1].isdigit && cstr[0].isdigit && cstr[1].isdigit {
@@ -431,11 +433,12 @@ class DomainViewController: UITableViewController,SimpleEditViewControllerDelega
 //		}
                 }
 //		*ptr++ = c;
-                (ptr++).memory = c
+                ptr.memory = c
+                ptr += 1
 //	}
             }
 //	ptr--;
-            ptr--
+            ptr -= 1
 //	*ptr = 0;
             ptr.memory = 0
             return ostr

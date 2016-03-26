@@ -15,7 +15,7 @@ You should not contact to Apple or SHLab(jp) about any faults caused by my trans
 ================================================================================
 BUILD REQUIREMENTS:
 
-Xcode 7 beta 4, iOS SDK 9
+Xcode 7.3, iOS SDK 9
 
 ================================================================================
 RUNTIME REQUIREMENTS:

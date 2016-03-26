@@ -110,7 +110,7 @@ class SimpleEditViewController: UIViewController, UITextFieldDelegate {
 //
 //		// Add the "cancel" button to the navigation bar
 //		UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelAction")
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(SimpleEditViewController.cancelAction))
 //									   initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAction)];
 //
 //		self.navigationItem.leftBarButtonItem = cancelButton;

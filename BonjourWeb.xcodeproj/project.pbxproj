@@ -19,10 +19,9 @@
 		D71850591B6556D9006A2F8F /* DomainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71850551B6556D9006A2F8F /* DomainViewController.swift */; };
 		D718505A1B6556D9006A2F8F /* SimpleEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71850561B6556D9006A2F8F /* SimpleEditViewController.swift */; };
 		D718505D1B6556F7006A2F8F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D718505B1B6556F7006A2F8F /* LaunchScreen.storyboard */; };
+		D734A2121CA65F6700BAFAA9 /* BonjourServerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D734A2111CA65F6700BAFAA9 /* BonjourServerRequest.swift */; };
 		D75159121B6CBD0F009DEDCB /* BonjourServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75159111B6CBD0F009DEDCB /* BonjourServer.swift */; };
-		D75159141B6CBDA9009DEDCB /* BonjourServerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75159131B6CBDA9009DEDCB /* BonjourServerRequest.swift */; };
 		D76524811B65287500A1E5DA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D76524801B65287500A1E5DA /* Images.xcassets */; };
-		D7F3A5111B6E05280059B804 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = D7F3A5101B6E05280059B804 /* README.md */; };
 		D7FCEB721AF76EEA0011B75D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D7FCEB711AF76EEA0011B75D /* Default-568h@2x.png */; };
 		D7FCEB7F1AF7DE8E0011B75D /* BonjourWebAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FCEB7C1AF7D1FA0011B75D /* BonjourWebAppDelegate.swift */; };
 /* End PBXBuildFile section */
@@ -43,8 +42,8 @@
 		D71850551B6556D9006A2F8F /* DomainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DomainViewController.swift; path = BonjourSupport/DomainViewController.swift; sourceTree = "<group>"; };
 		D71850561B6556D9006A2F8F /* SimpleEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimpleEditViewController.swift; path = BonjourSupport/SimpleEditViewController.swift; sourceTree = "<group>"; };
 		D718505C1B6556F7006A2F8F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D734A2111CA65F6700BAFAA9 /* BonjourServerRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BonjourServerRequest.swift; path = BonjourSupport/BonjourServerRequest.swift; sourceTree = "<group>"; };
 		D75159111B6CBD0F009DEDCB /* BonjourServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BonjourServer.swift; path = BonjourSupport/BonjourServer.swift; sourceTree = "<group>"; };
-		D75159131B6CBDA9009DEDCB /* BonjourServerRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BonjourServerRequest.swift; sourceTree = "<group>"; };
 		D76524801B65287500A1E5DA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = BonjourWeb/Images.xcassets; sourceTree = "<group>"; };
 		D7F3A5101B6E05280059B804 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D7FCEB711AF76EEA0011B75D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -123,12 +122,12 @@
 		4ADC7FA00DDD217500F4B61B /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				D734A2111CA65F6700BAFAA9 /* BonjourServerRequest.swift */,
 				D71850531B6556D9006A2F8F /* BonjourBrowser.swift */,
 				D71850541B6556D9006A2F8F /* BrowserViewController.swift */,
 				D71850551B6556D9006A2F8F /* DomainViewController.swift */,
 				D71850561B6556D9006A2F8F /* SimpleEditViewController.swift */,
 				D75159111B6CBD0F009DEDCB /* BonjourServer.swift */,
-				D75159131B6CBDA9009DEDCB /* BonjourServerRequest.swift */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -205,13 +204,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D75159141B6CBDA9009DEDCB /* BonjourServerRequest.swift in Sources */,
+				D734A2121CA65F6700BAFAA9 /* BonjourServerRequest.swift in Sources */,
 				D75159121B6CBD0F009DEDCB /* BonjourServer.swift in Sources */,
 				D71850591B6556D9006A2F8F /* DomainViewController.swift in Sources */,
 				D718505A1B6556D9006A2F8F /* SimpleEditViewController.swift in Sources */,
 				D71850571B6556D9006A2F8F /* BonjourBrowser.swift in Sources */,
 				D71850581B6556D9006A2F8F /* BrowserViewController.swift in Sources */,
-				D7F3A5111B6E05280059B804 /* README.md in Sources */,
 				D7FCEB7F1AF7DE8E0011B75D /* BonjourWebAppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

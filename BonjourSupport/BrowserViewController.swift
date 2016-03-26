@@ -105,12 +105,12 @@ class BrowserViewController: UITableViewController, NSNetServiceBrowserDelegate,
         
         if showCancelButton {
             // add Cancel button as the nav bar's custom right view
-            let addButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelAction")
+            let addButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(BrowserViewController.cancelAction))
             self.navigationItem.rightBarButtonItem = addButton
         }
         
         // Make sure we have a chance to discover devices before showing the user that nothing was found (yet)
-        NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "initialWaitOver:", userInfo: nil, repeats: false)
+        NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(BrowserViewController.waitOver(_:)), userInfo: nil, repeats: false)
         
     }
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -270,7 +270,7 @@ class BrowserViewController: UITableViewController, NSNetServiceBrowserDelegate,
         // Make sure we give the user some feedback that the resolve is happening.
         // We will be called back asynchronously, so we don't want the user to think we're just stuck.
         // We delay showing this activity indicator in case the service is resolved quickly.
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "showWaiting:", userInfo: self.currentResolve, repeats: false)
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(BrowserViewController.showWaiting(_:)), userInfo: self.currentResolve, repeats: false)
     }
     
     
