@@ -2,7 +2,7 @@
 //  SimpleEditViewController.swift
 //  BonjourWeb
 //
-//  Created by 開発 on 2015/5/4.
+//  Translated by OOPer in cooperation with shlab.jp, on 2015/5/4.
 //
 //
 ///*
@@ -53,159 +53,81 @@
 //Copyright (C) 2010 Apple Inc. All Rights Reserved.
 //
 //*/
-//
-//#import <UIKit/UIKit.h>
+
 import UIKit
-//
-//@class SimpleEditViewController;
-//
-//@protocol SimpleEditViewControllerDelegate <NSObject>
+
 @objc(SimpleEditViewControllerDelegate)
 protocol SimpleEditViewControllerDelegate: NSObjectProtocol {
-//@required
-//// This method will be invoked when the user taps the 'Done' or 'Cancel' buttons.
-//// The text parameter will be nil if the user taps the 'Cancel' button.
-//- (void) simpleEditViewController:(SimpleEditViewController*)sevc didGetText:(NSString*)text;
-    func simpleEditViewController(sevc: SimpleEditViewController, didGetText text: String?)
-//@end
+    // This method will be invoked when the user taps the 'Done' or 'Cancel' buttons.
+    // The text parameter will be nil if the user taps the 'Cancel' button.
+    func simpleEditViewController(_ sevc: SimpleEditViewController, didGetText text: String?)
 }
-//
+
 @objc(SimpleEditViewController)
 class SimpleEditViewController: UIViewController, UITextFieldDelegate {
-//@interface SimpleEditViewController : UIViewController <UITextFieldDelegate> {
-//	id<SimpleEditViewControllerDelegate> _delegate;
-//	UITextField* _textField;
-//	BOOL cancelling;
     var cancelling: Bool = false
-//}
-//
-//@property(nonatomic, assign) id<SimpleEditViewControllerDelegate> delegate;
+    
     var delegate: SimpleEditViewControllerDelegate?
-//
-//- (id)initWithTitle:(NSString*)title currentText:(NSString*)current;
-//
-//@end
-//
-//#import "SimpleEditViewController.h"
-//
-//@interface SimpleEditViewController ()
-//@property(nonatomic, retain) UITextField* textField;
+    
     private var textField: UITextField!
-//@end
-//
-//@implementation SimpleEditViewController
-//
-//@synthesize delegate = _delegate;
-//@synthesize textField = _textField;
-//
-//- (id)initWithTitle:(NSString*)title currentText:(NSString*)current {
+    
     convenience init(title: String?, currentText current: String?) {
-//
-//	if ((self = [super init])) {
+        
         self.init()
-//		self.title = title;
         self.title = title
-//		self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-        self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
-//
-//		// Add the "cancel" button to the navigation bar
-//		UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(SimpleEditViewController.cancelAction))
-//									   initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAction)];
-//
-//		self.navigationItem.leftBarButtonItem = cancelButton;
+        self.view.backgroundColor = UIColor.groupTableViewBackground
+        
+        // Add the "cancel" button to the navigation bar
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(SimpleEditViewController.cancelAction))
+        
         self.navigationItem.leftBarButtonItem = cancelButton
-//		[cancelButton release];
-//
-//		CGSize size = self.view.frame.size;
+        
         let size = self.view.frame.size
-//		CGRect rect = CGRectMake(5, 5, size.width-10, 30);
-        let rect = CGRectMake(5, 70, size.width-10, 30)
-//
-//		_textField = [[UITextField alloc] initWithFrame:rect];
+        let rect = CGRect(x: 5, y: 70, width: size.width-10, height: 30)
+        
         textField = UITextField(frame: rect)
-//
-//		_textField.text = current;
+        
         textField.text = current
-//		_textField.autocorrectionType = UITextAutocorrectionTypeNo;
-        textField.autocorrectionType = UITextAutocorrectionType.No
-//		_textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        textField.autocapitalizationType = UITextAutocapitalizationType.None
-//		_textField.borderStyle = UITextBorderStyleRoundedRect;
-        textField.borderStyle = UITextBorderStyle.RoundedRect
-//		_textField.textColor = [UIColor blackColor];
-        textField.textColor = UIColor.blackColor()
-//		_textField.font = [UIFont systemFontOfSize:17.0];
-        textField.font = UIFont.systemFontOfSize(17.0)
-//		_textField.backgroundColor = [UIColor clearColor];
-        textField.backgroundColor = UIColor.clearColor()
-//		_textField.keyboardType = UIKeyboardTypeURL;
+        textField.autocorrectionType = UITextAutocorrectionType.no
+        textField.autocapitalizationType = UITextAutocapitalizationType.none
+        textField.borderStyle = UITextBorderStyle.roundedRect
+        textField.textColor = UIColor.black
+        textField.font = UIFont.systemFont(ofSize: 17.0)
+        textField.backgroundColor = UIColor.clear
         textField.keyboardType = UIKeyboardType.URL
-//		_textField.returnKeyType = UIReturnKeyDone;
-        textField.returnKeyType = UIReturnKeyType.Done
-//		_textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        textField.clearButtonMode = UITextFieldViewMode.WhileEditing
-//
-//		_textField.delegate = self;
+        textField.returnKeyType = UIReturnKeyType.done
+        textField.clearButtonMode = UITextFieldViewMode.whileEditing
+        
         textField.delegate = self
-//
-//		[self.view addSubview:_textField];
+        
         self.view.addSubview(textField)
-//
-//		[_textField becomeFirstResponder];
+        
         textField.becomeFirstResponder()
-//
-//		cancelling = NO;
+        
         cancelling = false
-//	}
-//
-//	return self;
-//}
+        
     }
-//
-//
-//- (IBAction)cancelAction {
+    
+    
     @IBAction func cancelAction() {
-//	cancelling = YES;
         cancelling = true
-//	[self.textField resignFirstResponder];
         self.textField.resignFirstResponder()
-//}
     }
-//
-//
-//- (void)textFieldDidEndEditing:(UITextField *)textField {
-    func textFieldDidEndEditing(textField: UITextField) {
-//	if (textField == self.textField) {
+    
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
         if textField === self.textField {
-//		[self.delegate simpleEditViewController:self didGetText:cancelling ? nil : self.textField.text];
             self.delegate?.simpleEditViewController(self, didGetText: cancelling ? nil : self.textField.text)
-//	}
         }
-//}
     }
-//
-//
-//- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-//	if (textField == self.textField) {
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField === self.textField {
-//		[self.textField resignFirstResponder];
             self.textField.resignFirstResponder()
-//	}
         }
-//	return YES;
         return true
-//}
     }
-//
-//
-//- (void)dealloc {
-//	[_textField release];
-//	[super dealloc];
-//}
-//
-//
-//@end
-//
+    
+    
 }

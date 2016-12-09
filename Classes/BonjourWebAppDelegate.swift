@@ -77,15 +77,15 @@ class BonjourWebAppDelegate: NSObject, UIApplicationDelegate, BonjourBrowserDele
     let kInitialDomain = "local"
     
     
-    func applicationDidFinishLaunching(application: UIApplication) {
+    func applicationDidFinishLaunching(_ application: UIApplication) {
         //### Internal Web Server for debugging
         server = BonjourServer()
         server.run()
         
         // Create the Bonjour Browser for Web services
         let aBrowser = BonjourBrowser(forType: kWebServiceType,
-            inDomain: kInitialDomain,
-            customDomains: nil, // we won't save any additional domains added by the user
+                                      inDomain: kInitialDomain,
+                                      customDomains: nil, // we won't save any additional domains added by the user
             showDisclosureIndicators: false,
             showCancelButton: false)
         self.browser = aBrowser
@@ -101,25 +101,25 @@ class BonjourWebAppDelegate: NSObject, UIApplicationDelegate, BonjourBrowserDele
     }
     
     
-    private func copyStringFromTXTDict(dict: [NSObject: AnyObject]?, which: String) -> String? {
+    private func copyStringFromTXTDict(_ dict: [NSObject: AnyObject]?, which: String) -> String? {
         // Helper for getting information from the TXT data
         var resultString: String? = nil
-        if let data = dict?[which] as! NSData? {
-            resultString = NSString(data: data, encoding: NSUTF8StringEncoding)! as String
+        if let data = dict?[which as NSObject] as! Data? {
+            resultString = String(data: data, encoding: String.Encoding.utf8)!
         }
         return resultString
     }
     
     
-    func bonjourBrowser(browser: BonjourBrowser, didResolveInstance service: NSNetService?) {
+    func bonjourBrowser(_ browser: BonjourBrowser, didResolveInstance service: NetService?) {
         assert(service != nil)
         // Construct the URL including the port number
         // Also use the path, username and password fields that can be in the TXT record
-        let dict = NSNetService.dictionaryFromTXTRecordData(service!.TXTRecordData()!)
+        let dict = NetService.dictionary(fromTXTRecord: service!.txtRecordData()!)
         let host = service!.hostName
         
-        let user = self.copyStringFromTXTDict(dict, which: "u")
-        let pass = self.copyStringFromTXTDict(dict, which: "p")
+        let user = self.copyStringFromTXTDict(dict as [NSObject : AnyObject]?, which: "u")
+        let pass = self.copyStringFromTXTDict(dict as [NSObject : AnyObject]?, which: "p")
         
         var portStr = ""
         
@@ -129,7 +129,7 @@ class BonjourWebAppDelegate: NSObject, UIApplicationDelegate, BonjourBrowserDele
             portStr = ":\(port)"
         }
         
-        var path = self.copyStringFromTXTDict(dict, which: "path")
+        var path = self.copyStringFromTXTDict(dict as [NSObject : AnyObject]?, which: "path")
         if path == nil || path!.isEmpty {
             path = "/"
         } else if !path!.hasPrefix("/") {
@@ -137,16 +137,16 @@ class BonjourWebAppDelegate: NSObject, UIApplicationDelegate, BonjourBrowserDele
         }
         
         let string = String(format: "http://%@%@%@%@%@%@%@",
-            user ?? "",
-            pass != nil ? ":" : "",
-            pass ?? "",
-            (user != nil || pass != nil) ? "@" : "",
-            host!,
-            portStr,
-            path!)
+                            user ?? "",
+                            pass != nil ? ":" : "",
+                            pass ?? "",
+                            (user != nil || pass != nil) ? "@" : "",
+                            host!,
+                            portStr,
+                            path!)
         
-        let url = NSURL(string: string)!
-        UIApplication.sharedApplication().openURL(url)
+        let url = URL(string: string)!
+        UIApplication.shared.openURL(url)
         
     }
     

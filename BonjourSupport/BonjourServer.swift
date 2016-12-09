@@ -17,9 +17,9 @@ let kBonjourServerNoSocketsAvailable = 3
 let kBonjourServerCouldNotBindOrEstablishNetService = 4
 
 @objc
-class BonjourServer: NSObject, BonjourServerRequestDelegate, NSNetServiceDelegate {
+class BonjourServer: NSObject, BonjourServerRequestDelegate, NetServiceDelegate {
     var connectionBag: Set<BonjourServerRequest> = []
-    var netService: NSNetService?
+    var netService: NetService?
     
     
     override init() {
@@ -31,24 +31,31 @@ class BonjourServer: NSObject, BonjourServerRequestDelegate, NSNetServiceDelegat
         }
     }
     
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         self.teardown()
     }
     
-    func netServiceDidPublish(sender: NSNetService) {
+    func netServiceWillPublish(_ sender: NetService) {
+        print(#function)
+    }
+    func netServiceDidPublish(_ sender: NetService) {
+        print(#function, sender)
         self.netService = sender
     }
-    func netService(sender: NSNetService, didNotPublish errorDict: [String: NSNumber]) {
-        fatalError(errorDict.description)
+    func netService(_ sender: NetService, didNotPublish errorDict: [String: NSNumber]) {
+        //### We found sometimes `netService(_:didNotPublish:)` called without errors, so ignore it.
+        //fatalError(errorDict.description)
+        print(errorDict.description)
     }
     
-    func netService(sender: NSNetService, didAcceptConnectionWithInputStream readStream: NSInputStream, outputStream writeStream: NSOutputStream) {
-        NSOperationQueue.mainQueue().addOperationWithBlock {
+    func netService(_ sender: NetService, didAcceptConnectionWith readStream: InputStream, outputStream writeStream: OutputStream) {
+        //print(#function)
+        OperationQueue.main.addOperation {
             //### We cannot get client peer info here?
             let peer: String? = "Generic Peer"
             
-            CFReadStreamSetProperty(readStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue)
-            CFWriteStreamSetProperty(writeStream, kCFStreamPropertyShouldCloseNativeSocket, kCFBooleanTrue)
+            CFReadStreamSetProperty(readStream, CFStreamPropertyKey(kCFStreamPropertyShouldCloseNativeSocket), kCFBooleanTrue)
+            CFWriteStreamSetProperty(writeStream, CFStreamPropertyKey(kCFStreamPropertyShouldCloseNativeSocket), kCFBooleanTrue)
             self.handleConnection(peer, inputStream: readStream, outputStream: writeStream)
         }
     }
@@ -60,15 +67,13 @@ class BonjourServer: NSObject, BonjourServerRequestDelegate, NSNetServiceDelegat
             return
         } else {
             
-            if self.netService == nil {
-                self.netService = NSNetService(domain: "local", type: kBonjourServiceType, name: UIDevice.currentDevice().name, port: 0)
-                self.netService?.delegate = self
-            }
-            
-            if self.netService == nil {
+            self.netService = NetService(domain: "local", type: kBonjourServiceType, name: "Internal Web Server", port: 0)
+            guard self.netService != nil else {
                 self.teardown()
                 throw NSError(domain: BonjourServerErrorDomain, code: kBonjourServerCouldNotBindOrEstablishNetService, userInfo: nil)
             }
+            self.netService?.delegate = self
+            
         }
     }
     
@@ -79,30 +84,30 @@ class BonjourServer: NSObject, BonjourServerRequestDelegate, NSNetServiceDelegat
             fatalError(thisError.localizedDescription)
         }
         
-        self.netService!.publishWithOptions(.ListenForConnections)
+        print(#function)
+        self.netService!.publish(options: .listenForConnections)
     }
     
-    func handleConnection(peerName: String?, inputStream readStream: NSInputStream, outputStream writeStream: NSOutputStream) {
+    func handleConnection(_ peerName: String?, inputStream readStream: InputStream, outputStream writeStream: OutputStream) {
         
-        assert(peerName != nil, "No peer name given for client.")
-        
-        if let peer = peerName  {
-            let newPeer = BonjourServerRequest(inputStream: readStream,
-                outputStream: writeStream,
-                peer: peer,
-                delegate: self)
-            
-            newPeer.runProtocol()
-            self.connectionBag.insert(newPeer)
-            
+        guard let peer = peerName else {
+            fatalError("No peer name given for client.")
         }
+        print("peer=",peer)
+        let newPeer = BonjourServerRequest(inputStream: readStream,
+            outputStream: writeStream,
+            peer: peer,
+            delegate: self)
+        
+        newPeer.runProtocol()
+        self.connectionBag.insert(newPeer)
     }
     
-    func bonjourServerRequestDidFinish(request: BonjourServerRequest) {
+    func bonjourServerRequestDidFinish(_ request: BonjourServerRequest) {
         self.connectionBag.remove(request)
     }
     
-    func bonjourServerRequestDidReceiveError(request: BonjourServerRequest) {
+    func bonjourServerRequestDidReceiveError(_ request: BonjourServerRequest) {
         self.connectionBag.remove(request)
     }
     

@@ -2,7 +2,7 @@
 //  BonjourBrowser.swift
 //  BonjourWeb
 //
-//  Created by 開発 on 2015/5/5.
+//  Translated by OOPer in cooperation with shlab.jp, on 2015/5/5.
 //
 //
 /*
@@ -65,7 +65,7 @@ import UIKit
 protocol BonjourBrowserDelegate: UINavigationControllerDelegate {
     // This method will be invoked when the user selects one of the service instances from the list.
     // The ref parameter will be the selected (already resolved) instance or nil if the user taps the 'Cancel' button (if shown).
-    func bonjourBrowser(browser: BonjourBrowser, didResolveInstance ref: NSNetService?)
+    func bonjourBrowser(_ browser: BonjourBrowser, didResolveInstance ref: NetService?)
 }
 
 @objc(BonjourBrowser)
@@ -100,33 +100,33 @@ class BonjourBrowser: UINavigationController, BrowserViewControllerDelegate, Dom
         showCancelButton: Bool          // Whether to show a cancel button as the right navigation item
         // Pass YES if you are modally showing this BonjourBrowser
         ) {
-            
-            // Create some strings that will be used in the DomainViewController.
-            let domainsTitle = NSLocalizedString("Domains", comment: "Domains title")
-            let domainLabel = NSLocalizedString("Added Domains", comment: "Added Domains label")
-            let addDomainTitle = NSLocalizedString("Add Domain", comment: "Add Domain title")
-            let searchingForServicesString = NSLocalizedString("Searching for services", comment: "Searching for services string")
-            
-            // Initialize the DomainViewController, which uses a NSNetServiceBrowser to look for Bonjour domains.
-            let dvc = DomainViewController(title: domainsTitle, showDisclosureIndicators: true, customsTitle: domainLabel, customs: customDomains, addDomainTitle: addDomainTitle, showCancelButton: showCancelButton)
-            
-            super.init(rootViewController: dvc)
-            self.type = type
-            self.showDisclosureIndicators = showDisclosureIndicators
-            self.showCancelButton = showCancelButton
-            self.searchingForServicesString	= searchingForServicesString
-            self.dvc = dvc
-            self.dvc.delegate = self
-            self.dvc.searchForBrowsableDomains() // Tells the DomainViewController's NSNetServiceBrowser to start a search for domains that are browsable via Bonjour and the computer's network configuration.
-            
-            if !domain.isEmpty {
-                self.domain = domain
-                self.setupBrowser()
-                self.pushViewController(self.bvc!, animated: false)
-            }
-            
+        
+        // Create some strings that will be used in the DomainViewController.
+        let domainsTitle = NSLocalizedString("Domains", comment: "Domains title")
+        let domainLabel = NSLocalizedString("Added Domains", comment: "Added Domains label")
+        let addDomainTitle = NSLocalizedString("Add Domain", comment: "Add Domain title")
+        let searchingForServicesString = NSLocalizedString("Searching for services", comment: "Searching for services string")
+        
+        // Initialize the DomainViewController, which uses a NSNetServiceBrowser to look for Bonjour domains.
+        let dvc = DomainViewController(title: domainsTitle, showDisclosureIndicators: true, customsTitle: domainLabel, customs: customDomains, addDomainTitle: addDomainTitle, showCancelButton: showCancelButton)
+        
+        super.init(rootViewController: dvc)
+        self.type = type
+        self.showDisclosureIndicators = showDisclosureIndicators
+        self.showCancelButton = showCancelButton
+        self.searchingForServicesString	= searchingForServicesString
+        self.dvc = dvc
+        self.dvc.delegate = self
+        self.dvc.searchForBrowsableDomains() // Tells the DomainViewController's NSNetServiceBrowser to start a search for domains that are browsable via Bonjour and the computer's network configuration.
+        
+        if !domain.isEmpty {
+            self.domain = domain
+            self.setupBrowser()
+            self.pushViewController(self.bvc!, animated: false)
+        }
+        
     }
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -135,7 +135,7 @@ class BonjourBrowser: UINavigationController, BrowserViewControllerDelegate, Dom
     }
     
     // This property holds a string that displays the status of the service search to the user.
-    private func didSetSearchingForServicesString(searchingForServicesString: String?) {
+    private func didSetSearchingForServicesString(_ searchingForServicesString: String?) {
         if self.searchingForServicesString != searchingForServicesString {
             
             if self.bvc != nil {
@@ -145,7 +145,7 @@ class BonjourBrowser: UINavigationController, BrowserViewControllerDelegate, Dom
     }
     
     
-    private func didSetShowTitleInNavigationBar(show: Bool) {
+    private func didSetShowTitleInNavigationBar(_ show: Bool) {
         if self.showTitleInNavigationBar {
             self.bvc?.navigationItem.prompt = self.title
             self.dvc.navigationItem.prompt = self.title
@@ -156,7 +156,7 @@ class BonjourBrowser: UINavigationController, BrowserViewControllerDelegate, Dom
     }
     
     
-    func browserViewController(bvc: BrowserViewController, didResolveInstance service: NSNetService?) {
+    func browserViewController(_ bvc: BrowserViewController, didResolveInstance service: NetService?) {
         assert(bvc === self.bvc)
         (self.delegate as! BonjourBrowserDelegate?)?.bonjourBrowser(self, didResolveInstance: service)
     }
@@ -178,7 +178,7 @@ class BonjourBrowser: UINavigationController, BrowserViewControllerDelegate, Dom
     
     // This method will be invoked when the user selects one of the domains from the list.
     // The domain parameter will be the selected domain or nil if the user taps the 'Cancel' button (if shown).
-    func domainViewController(dvc: DomainViewController, didSelectDomain domain: String?) {
+    func domainViewController(_ dvc: DomainViewController, didSelectDomain domain: String?) {
         if domain == nil {
             // Cancel
             (self.delegate as! BonjourBrowserDelegate?)?.bonjourBrowser(self, didResolveInstance: nil)

@@ -2,7 +2,7 @@
 //  BrowserViewController.swift
 //  BonjourWeb
 //
-//  Created by 開発 on 2015/5/4.
+//  Translated by OOPer in cooperation with shlab.jp, on 2015/5/4.
 //
 //
 /*
@@ -73,7 +73,7 @@ import UIKit
 protocol BrowserViewControllerDelegate: NSObjectProtocol {
     // This method will be invoked when the user selects one of the service instances from the list.
     // The ref parameter will be the selected (already resolved) instance or nil if the user taps the 'Cancel' button (if shown).
-    func browserViewController(bvc: BrowserViewController, didResolveInstance ref: NSNetService?)
+    func browserViewController(_ bvc: BrowserViewController, didResolveInstance ref: NetService?)
 }
 
 private let kProgressIndicatorSize: CGFloat = 20.0
@@ -82,16 +82,16 @@ private let kProgressIndicatorSize: CGFloat = 20.0
 
 
 @objc(BrowserViewController)
-class BrowserViewController: UITableViewController, NSNetServiceBrowserDelegate, NSNetServiceDelegate {
+class BrowserViewController: UITableViewController, NetServiceBrowserDelegate, NetServiceDelegate {
     var delegate: BrowserViewControllerDelegate?
     var searchingForServicesString: String? {
         didSet {didSetSearchingForServicesString(oldValue)}
     }
     private var showDisclosureIndicators: Bool = false
-    private var services: [NSNetService] = []
-    private var netServiceBrowser: NSNetServiceBrowser?
-    private var currentResolve: NSNetService?
-    dynamic var timer: NSTimer? {
+    private var services: [NetService] = []
+    private var netServiceBrowser: NetServiceBrowser?
+    private var currentResolve: NetService?
+    dynamic var timer: Timer? {
         willSet {willSetTimer(newValue)}
     }
     private var needsActivityIndicator: Bool = false
@@ -99,21 +99,21 @@ class BrowserViewController: UITableViewController, NSNetServiceBrowserDelegate,
     
     init(title: String, showDisclosureIndicators show: Bool, showCancelButton: Bool) {
         
-        super.init(style: .Plain)
+        super.init(style: .plain)
         self.title = title
         self.showDisclosureIndicators = show
         
         if showCancelButton {
             // add Cancel button as the nav bar's custom right view
-            let addButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(BrowserViewController.cancelAction))
+            let addButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(BrowserViewController.cancelAction))
             self.navigationItem.rightBarButtonItem = addButton
         }
         
         // Make sure we have a chance to discover devices before showing the user that nothing was found (yet)
-        NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(BrowserViewController.waitOver(_:)), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(BrowserViewController.waitOver(_:)), userInfo: nil, repeats: false)
         
     }
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
@@ -122,7 +122,7 @@ class BrowserViewController: UITableViewController, NSNetServiceBrowserDelegate,
     }
     
     // Holds the string that's displayed in the table view during service discovery.
-    private func didSetSearchingForServicesString(searchingForServicesString: String?) {
+    private func didSetSearchingForServicesString(_ searchingForServicesString: String?) {
         if self.searchingForServicesString != searchingForServicesString {
             
             // If there are no services, reload the table to ensure that searchingForServicesString appears.
@@ -135,18 +135,18 @@ class BrowserViewController: UITableViewController, NSNetServiceBrowserDelegate,
     // Creates an NSNetServiceBrowser that searches for services of a particular type in a particular domain.
     // If a service is currently being resolved, stop resolving it and stop the service browser from
     // discovering other services.
-    func searchForServicesOfType(type: String, inDomain domain: String) -> Bool {
+    @discardableResult func searchForServicesOfType(_ type: String, inDomain domain: String) -> Bool {
         
         self.stopCurrentResolve()
         self.netServiceBrowser?.stop()
         self.services.removeAll()
         
-        let aNetServiceBrowser = NSNetServiceBrowser()
+        let aNetServiceBrowser = NetServiceBrowser()
         // The NSNetServiceBrowser couldn't be allocated and initialized.
         
         aNetServiceBrowser.delegate = self
         self.netServiceBrowser = aNetServiceBrowser
-        self.netServiceBrowser!.searchForServicesOfType(type, inDomain: domain)
+        self.netServiceBrowser!.searchForServices(ofType: type, inDomain: domain)
         
         self.tableView.reloadData()
         return true
@@ -154,17 +154,17 @@ class BrowserViewController: UITableViewController, NSNetServiceBrowserDelegate,
     
     
     // When this is called, invalidate the existing timer before releasing it.
-    private func willSetTimer(newTimer: NSTimer?) {
+    private func willSetTimer(_ newTimer: Timer?) {
         timer?.invalidate()
     }
     
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // If there are no services and searchingForServicesString is set, show one row to tell the user.
         let count = self.services.count
         if count == 0 && self.searchingForServicesString != nil && self.initialWaitOver {
@@ -175,11 +175,11 @@ class BrowserViewController: UITableViewController, NSNetServiceBrowserDelegate,
     }
     
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tableCellIdentifier = "UITableViewCell"
-        var cell = tableView.dequeueReusableCellWithIdentifier(tableCellIdentifier)
+        var cell = tableView.dequeueReusableCell(withIdentifier: tableCellIdentifier)
         if cell == nil {
-            cell = UITableViewCell(style: .Default, reuseIdentifier: tableCellIdentifier)
+            cell = UITableViewCell(style: .default, reuseIdentifier: tableCellIdentifier)
         }
         
         let count = self.services.count
@@ -187,7 +187,7 @@ class BrowserViewController: UITableViewController, NSNetServiceBrowserDelegate,
             // If there are no services and searchingForServicesString is set, show one row explaining that to the user.
             cell!.textLabel!.text = self.searchingForServicesString
             cell!.textLabel!.textColor = UIColor(white: 0.5, alpha: 0.5)
-            cell!.accessoryType = UITableViewCellAccessoryType.None
+            cell!.accessoryType = UITableViewCellAccessoryType.none
             // Make sure to get rid of the activity indicator that may be showing if we were resolving cell zero but
             // then got didRemoveService callbacks for all services (e.g. the network connection went down).
             if cell!.accessoryView != nil {
@@ -197,23 +197,23 @@ class BrowserViewController: UITableViewController, NSNetServiceBrowserDelegate,
         }
         
         // Set up the text for the cell
-        let service = self.services[indexPath.row]
+        let service = self.services[(indexPath as NSIndexPath).row]
         cell!.textLabel!.text = service.name
-        cell!.textLabel!.textColor = UIColor.blackColor()
-        cell!.accessoryType = self.showDisclosureIndicators ? .DisclosureIndicator : .None
+        cell!.textLabel!.textColor = UIColor.black
+        cell!.accessoryType = self.showDisclosureIndicators ? .disclosureIndicator : .none
         
         // Note that the underlying array could have changed, and we want to show the activity indicator on the correct cell
         if self.needsActivityIndicator && self.currentResolve === service {
             if cell!.accessoryView == nil {
-                let frame = CGRectMake(0.0, 0.0, kProgressIndicatorSize, kProgressIndicatorSize)
+                let frame = CGRect(x: 0.0, y: 0.0, width: kProgressIndicatorSize, height: kProgressIndicatorSize)
                 let spinner = UIActivityIndicatorView(frame: frame)
                 spinner.startAnimating()
-                spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+                spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
                 spinner.sizeToFit()
-                spinner.autoresizingMask = [UIViewAutoresizing.FlexibleLeftMargin,
-                    UIViewAutoresizing.FlexibleRightMargin,
-                    UIViewAutoresizing.FlexibleTopMargin,
-                    UIViewAutoresizing.FlexibleBottomMargin]
+                spinner.autoresizingMask = [UIViewAutoresizing.flexibleLeftMargin,
+                                            UIViewAutoresizing.flexibleRightMargin,
+                                            UIViewAutoresizing.flexibleTopMargin,
+                                            UIViewAutoresizing.flexibleBottomMargin]
                 cell!.accessoryView = spinner
             }
         } else if cell!.accessoryView != nil {
@@ -224,7 +224,7 @@ class BrowserViewController: UITableViewController, NSNetServiceBrowserDelegate,
     }
     
     
-    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         // Ignore the selection if there are no services as the searchingForServicesString cell
         // may be visible and tapping it would do nothing
         if self.services.isEmpty {
@@ -244,7 +244,7 @@ class BrowserViewController: UITableViewController, NSNetServiceBrowserDelegate,
     }
     
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // If another resolve was running, stop it & remove the activity indicator from that cell
         if self.currentResolve != nil {
             // Get the indexPath for the active resolve cell
@@ -253,46 +253,46 @@ class BrowserViewController: UITableViewController, NSNetServiceBrowserDelegate,
             self.stopCurrentResolve()
             
             // If we found the indexPath for the row, reload that cell to remove the activity indicator
-            if let indexRow = self.services.indexOf(self.currentResolve!) {
-                let indexPath = NSIndexPath(forRow: indexRow, inSection: 0)
-                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+            if let indexRow = self.services.index(of: self.currentResolve!) {
+                let indexPath = IndexPath(row: indexRow, section: 0)
+                self.tableView.reloadRows(at: [indexPath], with: .none)
             }
         }
         
         // Then set the current resolve to the service corresponding to the tapped cell
-        self.currentResolve = self.services[indexPath.row]
+        self.currentResolve = self.services[(indexPath as NSIndexPath).row]
         self.currentResolve!.delegate = self
         
         // Attempt to resolve the service. A value of 0.0 sets an unlimited time to resolve it. The user can
         // choose to cancel the resolve by selecting another service in the table view.
-        self.currentResolve!.resolveWithTimeout(0.0)
+        self.currentResolve!.resolve(withTimeout: 0.0)
         
         // Make sure we give the user some feedback that the resolve is happening.
         // We will be called back asynchronously, so we don't want the user to think we're just stuck.
         // We delay showing this activity indicator in case the service is resolved quickly.
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(BrowserViewController.showWaiting(_:)), userInfo: self.currentResolve, repeats: false)
+        self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(BrowserViewController.showWaiting(_:)), userInfo: self.currentResolve, repeats: false)
     }
     
     
     // If necessary, sets up state to show an activity indicator to let the user know that a resolve is occuring.
-    func showWaiting(timer: NSTimer) {
+    func showWaiting(_ timer: Timer) {
         if timer === self.timer {
-            let service = self.timer!.userInfo as! NSNetService
+            let service = self.timer!.userInfo as! NetService
             if self.currentResolve === service {
                 self.needsActivityIndicator = true
                 
-                if let indexRow = self.services.indexOf(self.currentResolve!) {
-                    let indexPath = NSIndexPath(forRow: indexRow, inSection: 0)
-                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                if let indexRow = self.services.index(of: self.currentResolve!) {
+                    let indexPath = IndexPath(row: indexRow, section: 0)
+                    self.tableView.reloadRows(at: [indexPath], with: .none)
                     // Deselect the row since the activity indicator shows the user something is happening.
-                    self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                    self.tableView.deselectRow(at: indexPath, animated: true)
                 }
             }
         }
     }
     
     
-    @objc(initialWaitOver:) func waitOver(timer: NSTimer) {
+    @objc(initialWaitOver:) func waitOver(_ timer: Timer) {
         self.initialWaitOver = true
         if self.services.isEmpty {
             self.tableView.reloadData()
@@ -302,18 +302,18 @@ class BrowserViewController: UITableViewController, NSNetServiceBrowserDelegate,
     
     private func sortAndUpdateUI() {
         // Sort the services by name.
-        self.services.sortInPlace {$0.name.localizedCaseInsensitiveCompare($1.name) == NSComparisonResult.OrderedAscending}
+        self.services.sort {$0.name.localizedCaseInsensitiveCompare($1.name) == ComparisonResult.orderedAscending}
         self.tableView.reloadData()
     }
     
     
-    func netServiceBrowser(aNetServiceBrowser: NSNetServiceBrowser, didRemoveService service: NSNetService, moreComing: Bool) {
+    func netServiceBrowser(_ aNetServiceBrowser: NetServiceBrowser, didRemove service: NetService, moreComing: Bool) {
         // If a service went away, stop resolving it if it's currently being resolved,
         // remove it from the list and update the table view if no more events are queued.
         if self.currentResolve != nil && service == self.currentResolve! {
             self.stopCurrentResolve()
         }
-        self.services.removeAtIndex(self.services.indexOf(service)!)
+        self.services.remove(at: self.services.index(of: service)!)
         
         // If moreComing is NO, it means that there are no more messages in the queue from the Bonjour daemon, so we should update the UI.
         // When moreComing is set, we don't update the UI so that it doesn't 'flash'.
@@ -323,7 +323,7 @@ class BrowserViewController: UITableViewController, NSNetServiceBrowserDelegate,
     }
     
     
-    func netServiceBrowser(aNetServiceBrowser: NSNetServiceBrowser, didFindService service: NSNetService, moreComing: Bool) {
+    func netServiceBrowser(_ aNetServiceBrowser: NetServiceBrowser, didFind service: NetService, moreComing: Bool) {
         // If a service came online, add it to the list and update the table view if no more events are queued.
         self.services.append(service)
         
@@ -336,13 +336,13 @@ class BrowserViewController: UITableViewController, NSNetServiceBrowserDelegate,
     
     
     // This should never be called, since we resolve with a timeout of 0.0, which means indefinite
-    func netService(sender: NSNetService, didNotResolve errorDict: [String : NSNumber]) {
+    func netService(_ sender: NetService, didNotResolve errorDict: [String : NSNumber]) {
         self.stopCurrentResolve()
         self.tableView.reloadData()
     }
     
     
-    func netServiceDidResolveAddress(service: NSNetService) {
+    func netServiceDidResolveAddress(_ service: NetService) {
         assert(service === self.currentResolve)
         
         self.stopCurrentResolve()
