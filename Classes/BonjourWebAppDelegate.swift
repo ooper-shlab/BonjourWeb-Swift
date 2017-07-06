@@ -101,10 +101,10 @@ class BonjourWebAppDelegate: NSObject, UIApplicationDelegate, BonjourBrowserDele
     }
     
     
-    private func copyStringFromTXTDict(_ dict: [NSObject: AnyObject]?, which: String) -> String? {
+    private func copyStringFromTXTDict(_ dict: [String: Data], which: String) -> String? {
         // Helper for getting information from the TXT data
         var resultString: String? = nil
-        if let data = dict?[which as NSObject] as! Data? {
+        if let data = dict[which] {
             resultString = String(data: data, encoding: String.Encoding.utf8)!
         }
         return resultString
@@ -118,8 +118,8 @@ class BonjourWebAppDelegate: NSObject, UIApplicationDelegate, BonjourBrowserDele
         let dict = NetService.dictionary(fromTXTRecord: service!.txtRecordData()!)
         let host = service!.hostName
         
-        let user = self.copyStringFromTXTDict(dict as [NSObject : AnyObject]?, which: "u")
-        let pass = self.copyStringFromTXTDict(dict as [NSObject : AnyObject]?, which: "p")
+        let user = self.copyStringFromTXTDict(dict, which: "u")
+        let pass = self.copyStringFromTXTDict(dict, which: "p")
         
         var portStr = ""
         
@@ -129,11 +129,11 @@ class BonjourWebAppDelegate: NSObject, UIApplicationDelegate, BonjourBrowserDele
             portStr = ":\(port)"
         }
         
-        var path = self.copyStringFromTXTDict(dict as [NSObject : AnyObject]?, which: "path")
+        var path = self.copyStringFromTXTDict(dict, which: "path")
         if path == nil || path!.isEmpty {
             path = "/"
         } else if !path!.hasPrefix("/") {
-            path = "/\(path)"
+            path = "/\(path!)"
         }
         
         let string = String(format: "http://%@%@%@%@%@%@%@",

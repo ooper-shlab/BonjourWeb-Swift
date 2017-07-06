@@ -197,7 +197,7 @@ class BrowserViewController: UITableViewController, NetServiceBrowserDelegate, N
         }
         
         // Set up the text for the cell
-        let service = self.services[(indexPath as NSIndexPath).row]
+        let service = self.services[indexPath.row]
         cell!.textLabel!.text = service.name
         cell!.textLabel!.textColor = UIColor.black
         cell!.accessoryType = self.showDisclosureIndicators ? .disclosureIndicator : .none
@@ -260,7 +260,7 @@ class BrowserViewController: UITableViewController, NetServiceBrowserDelegate, N
         }
         
         // Then set the current resolve to the service corresponding to the tapped cell
-        self.currentResolve = self.services[(indexPath as NSIndexPath).row]
+        self.currentResolve = self.services[indexPath.row]
         self.currentResolve!.delegate = self
         
         // Attempt to resolve the service. A value of 0.0 sets an unlimited time to resolve it. The user can

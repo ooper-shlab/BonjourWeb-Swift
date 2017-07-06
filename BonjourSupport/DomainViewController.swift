@@ -208,7 +208,7 @@ class DomainViewController: UITableViewController,SimpleEditViewControllerDelega
         }
         
         // Set up the text for the cell
-        cell!.textLabel!.text = ((indexPath as NSIndexPath).section != 0 ? self.customs : self.domains)[(indexPath as NSIndexPath).row]
+        cell!.textLabel!.text = (indexPath.section != 0 ? self.customs : self.domains)[indexPath.row]
         cell!.textLabel!.textColor = UIColor.black
         cell!.accessoryType = self.showDisclosureIndicators ? .disclosureIndicator : .none
         return cell!
@@ -216,13 +216,13 @@ class DomainViewController: UITableViewController,SimpleEditViewControllerDelega
     
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return (indexPath as NSIndexPath).section != 0 && tableView.isEditing
+        return indexPath.section != 0 && tableView.isEditing
     }
     
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.delegate?.domainViewController(self, didSelectDomain: ((indexPath as NSIndexPath).section != 0 ? self.customs : self.domains)[(indexPath as NSIndexPath).row])
+        self.delegate?.domainViewController(self, didSelectDomain: (indexPath.section != 0 ? self.customs : self.domains)[indexPath.row])
     }
     
     
@@ -320,8 +320,8 @@ class DomainViewController: UITableViewController,SimpleEditViewControllerDelega
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         assert(editingStyle == UITableViewCellEditingStyle.delete)
-        assert((indexPath as NSIndexPath).section == 1)
-        self.customs.remove(at: (indexPath as NSIndexPath).row)
+        assert(indexPath.section == 1)
+        self.customs.remove(at: indexPath.row)
         if self.customs.isEmpty {
             self.tableView.deleteSections(IndexSet(integer: 1), with: .right)
         } else {
@@ -346,7 +346,7 @@ class DomainViewController: UITableViewController,SimpleEditViewControllerDelega
         self.addButtons(self.tableView.isEditing)
         self.tableView.reloadData()
         let ints = [1, self.customs.index(of: (text!))!]
-        let indexPath = NSIndexPath(indexes: ints, length: 2) as IndexPath
+        let indexPath = IndexPath(indexes: ints)
         self.tableView.scrollToRow(at: indexPath, at: .none, animated: true)
     }
     
