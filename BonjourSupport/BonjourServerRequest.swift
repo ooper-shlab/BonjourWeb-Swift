@@ -35,10 +35,10 @@ class BonjourServerRequest: NSObject, StreamDelegate {
     func runProtocol() {
         
         self.istr.delegate = self
-        self.istr.schedule(in: .current, forMode: RunLoopMode.commonModes)
+        self.istr.schedule(in: .current, forMode: .common)
         self.istr.open()
         self.ostr.delegate = self
-        self.ostr.schedule(in: .current, forMode: RunLoopMode.commonModes)
+        self.ostr.schedule(in: .current, forMode: .common)
         self.ostr.open()
     }
     
@@ -73,15 +73,15 @@ class BonjourServerRequest: NSObject, StreamDelegate {
         "\r\n"
         let response = (header+body).data(using: .utf8)!
         response.withUnsafeBytes {responseBytes in
-            _ = self.ostr.write(responseBytes, maxLength: response.count)
+            _ = self.ostr.write(responseBytes.bindMemory(to: UInt8.self).baseAddress!, maxLength: response.count)
         }
         self.ostr.close()
     }
     
     deinit {
-        istr.remove(from: .current, forMode: .commonModes)
+        istr.remove(from: .current, forMode: .common)
         
-        ostr.remove(from: .current, forMode: .commonModes)
+        ostr.remove(from: .current, forMode: .common)
         
         
     }

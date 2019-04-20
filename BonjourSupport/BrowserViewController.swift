@@ -105,7 +105,7 @@ class BrowserViewController: UITableViewController, NetServiceBrowserDelegate, N
         
         if showCancelButton {
             // add Cancel button as the nav bar's custom right view
-            let addButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(BrowserViewController.cancelAction))
+            let addButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAction))
             self.navigationItem.rightBarButtonItem = addButton
         }
         
@@ -187,7 +187,7 @@ class BrowserViewController: UITableViewController, NetServiceBrowserDelegate, N
             // If there are no services and searchingForServicesString is set, show one row explaining that to the user.
             cell!.textLabel!.text = self.searchingForServicesString
             cell!.textLabel!.textColor = UIColor(white: 0.5, alpha: 0.5)
-            cell!.accessoryType = UITableViewCellAccessoryType.none
+            cell!.accessoryType = .none
             // Make sure to get rid of the activity indicator that may be showing if we were resolving cell zero but
             // then got didRemoveService callbacks for all services (e.g. the network connection went down).
             if cell!.accessoryView != nil {
@@ -208,12 +208,12 @@ class BrowserViewController: UITableViewController, NetServiceBrowserDelegate, N
                 let frame = CGRect(x: 0.0, y: 0.0, width: kProgressIndicatorSize, height: kProgressIndicatorSize)
                 let spinner = UIActivityIndicatorView(frame: frame)
                 spinner.startAnimating()
-                spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+                spinner.style = .gray
                 spinner.sizeToFit()
-                spinner.autoresizingMask = [UIViewAutoresizing.flexibleLeftMargin,
-                                            UIViewAutoresizing.flexibleRightMargin,
-                                            UIViewAutoresizing.flexibleTopMargin,
-                                            UIViewAutoresizing.flexibleBottomMargin]
+                spinner.autoresizingMask = [.flexibleLeftMargin,
+                                            .flexibleRightMargin,
+                                            .flexibleTopMargin,
+                                            .flexibleBottomMargin]
                 cell!.accessoryView = spinner
             }
         } else if cell!.accessoryView != nil {
@@ -253,7 +253,7 @@ class BrowserViewController: UITableViewController, NetServiceBrowserDelegate, N
             self.stopCurrentResolve()
             
             // If we found the indexPath for the row, reload that cell to remove the activity indicator
-            if let indexRow = self.services.index(of: self.currentResolve!) {
+            if let indexRow = self.services.firstIndex(of: self.currentResolve!) {
                 let indexPath = IndexPath(row: indexRow, section: 0)
                 self.tableView.reloadRows(at: [indexPath], with: .none)
             }
@@ -270,18 +270,18 @@ class BrowserViewController: UITableViewController, NetServiceBrowserDelegate, N
         // Make sure we give the user some feedback that the resolve is happening.
         // We will be called back asynchronously, so we don't want the user to think we're just stuck.
         // We delay showing this activity indicator in case the service is resolved quickly.
-        self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(BrowserViewController.showWaiting(_:)), userInfo: self.currentResolve, repeats: false)
+        self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(showWaiting(_:)), userInfo: self.currentResolve, repeats: false)
     }
     
     
     // If necessary, sets up state to show an activity indicator to let the user know that a resolve is occuring.
-    func showWaiting(_ timer: Timer) {
+    @objc func showWaiting(_ timer: Timer) {
         if timer === self.timer {
             let service = self.timer!.userInfo as! NetService
             if self.currentResolve === service {
                 self.needsActivityIndicator = true
                 
-                if let indexRow = self.services.index(of: self.currentResolve!) {
+                if let indexRow = self.services.firstIndex(of: self.currentResolve!) {
                     let indexPath = IndexPath(row: indexRow, section: 0)
                     self.tableView.reloadRows(at: [indexPath], with: .none)
                     // Deselect the row since the activity indicator shows the user something is happening.
@@ -313,7 +313,7 @@ class BrowserViewController: UITableViewController, NetServiceBrowserDelegate, N
         if self.currentResolve != nil && service == self.currentResolve! {
             self.stopCurrentResolve()
         }
-        self.services.remove(at: self.services.index(of: service)!)
+        self.services.remove(at: self.services.firstIndex(of: service)!)
         
         // If moreComing is NO, it means that there are no more messages in the queue from the Bonjour daemon, so we should update the UI.
         // When moreComing is set, we don't update the UI so that it doesn't 'flash'.
@@ -351,7 +351,7 @@ class BrowserViewController: UITableViewController, NetServiceBrowserDelegate, N
     }
     
     
-    func cancelAction() {
+    @objc func cancelAction() {
         self.delegate?.browserViewController(self, didResolveInstance: nil)
     }
     

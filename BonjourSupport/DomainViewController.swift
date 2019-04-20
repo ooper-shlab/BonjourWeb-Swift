@@ -128,7 +128,7 @@ class DomainViewController: UITableViewController,SimpleEditViewControllerDelega
     
     private func addAddButton(_ right: Bool) {
         // add + button as the nav bar's custom right view
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(DomainViewController.addAction(_:)))
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addAction(_:)))
         if right {self.navigationItem.rightBarButtonItem = addButton}
         else {self.navigationItem.leftBarButtonItem = addButton}
     }
@@ -136,7 +136,7 @@ class DomainViewController: UITableViewController,SimpleEditViewControllerDelega
     private func addButtons(_ editing: Bool) {
         if editing {
             // Add the "done" button to the navigation bar
-            let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(DomainViewController.doneAction(_:)))
+            let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneAction(_:)))
             
             self.navigationItem.leftBarButtonItem = doneButton
             
@@ -144,7 +144,7 @@ class DomainViewController: UITableViewController,SimpleEditViewControllerDelega
         } else {
             if !self.customs.isEmpty {
                 // Add the "edit" button to the navigation bar
-                let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(DomainViewController.editAction(_:)))
+                let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editAction(_:)))
                 
                 self.navigationItem.leftBarButtonItem = editButton
             } else {
@@ -265,13 +265,13 @@ class DomainViewController: UITableViewController,SimpleEditViewControllerDelega
             return ostr
         }
         let result = String(cString: ostr)
-        ostr.deallocate(capacity: buflen)
+        ostr.deallocate()
         return result
     }
     
     
     func netServiceBrowser(_ aNetServiceBrowser: NetServiceBrowser, didRemoveDomain domain: String, moreComing: Bool) {
-        self.domains.remove(at: self.domains.index(of: transmogrify(domain))!)
+        self.domains.remove(at: self.domains.firstIndex(of: transmogrify(domain))!)
         
         // moreComing really means that there are no more messages in the queue from the Bonjour daemon, so we should update the UI.
         // When moreComing is set, we don't update the UI so that it doesn't 'flash'.
@@ -293,13 +293,13 @@ class DomainViewController: UITableViewController,SimpleEditViewControllerDelega
     }
     
     
-    func doneAction(_: AnyObject) {
+    @objc func doneAction(_: AnyObject) {
         self.tableView.setEditing(false, animated: true)
         self.addButtons(self.tableView.isEditing)
     }
     
     
-    func editAction(_: AnyObject) {
+    @objc func editAction(_: AnyObject) {
         self.tableView.setEditing(true, animated: true)
         self.addButtons(self.tableView.isEditing)
     }
@@ -310,7 +310,7 @@ class DomainViewController: UITableViewController,SimpleEditViewControllerDelega
     }
     
     
-    func addAction(_: AnyObject) {
+    @objc func addAction(_: AnyObject) {
         let sevc = SimpleEditViewController(title: self.addDomainTitle, currentText: nil)
         sevc.delegate = self
         let nc = UINavigationController(rootViewController: sevc)
@@ -318,8 +318,8 @@ class DomainViewController: UITableViewController,SimpleEditViewControllerDelega
     }
     
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        assert(editingStyle == UITableViewCellEditingStyle.delete)
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        assert(editingStyle == .delete)
         assert(indexPath.section == 1)
         self.customs.remove(at: indexPath.row)
         if self.customs.isEmpty {
@@ -345,7 +345,7 @@ class DomainViewController: UITableViewController,SimpleEditViewControllerDelega
         
         self.addButtons(self.tableView.isEditing)
         self.tableView.reloadData()
-        let ints = [1, self.customs.index(of: (text!))!]
+        let ints = [1, self.customs.firstIndex(of: text!)!]
         let indexPath = IndexPath(indexes: ints)
         self.tableView.scrollToRow(at: indexPath, at: .none, animated: true)
     }

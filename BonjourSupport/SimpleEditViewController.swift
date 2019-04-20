@@ -88,15 +88,15 @@ class SimpleEditViewController: UIViewController, UITextFieldDelegate {
         textField = UITextField(frame: rect)
         
         textField.text = current
-        textField.autocorrectionType = UITextAutocorrectionType.no
-        textField.autocapitalizationType = UITextAutocapitalizationType.none
-        textField.borderStyle = UITextBorderStyle.roundedRect
-        textField.textColor = UIColor.black
-        textField.font = UIFont.systemFont(ofSize: 17.0)
-        textField.backgroundColor = UIColor.clear
-        textField.keyboardType = UIKeyboardType.URL
-        textField.returnKeyType = UIReturnKeyType.done
-        textField.clearButtonMode = UITextFieldViewMode.whileEditing
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        textField.borderStyle = .roundedRect
+        textField.textColor = .black
+        textField.font = .systemFont(ofSize: 17.0)
+        textField.backgroundColor = .clear
+        textField.keyboardType = .URL
+        textField.returnKeyType = .done
+        textField.clearButtonMode = .whileEditing
         
         textField.delegate = self
         
